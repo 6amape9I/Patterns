@@ -5,6 +5,7 @@ out/
 .idea/
 *.iws
 *.xml
+Patterns.iml
 
 ### Eclipse ###
 .apt_generated
