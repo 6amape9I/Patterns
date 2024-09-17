@@ -28,13 +28,19 @@ fun main() {
             "telegram" to "@johndoe",
             "email" to "dfnvkdjvn@oifdv.com",
             "github" to "johndoe"
+        )
     )
-    )
-
     val student3 = Student(StuHas)
 
-    val students = mutableListOf(student, student2, student3)
+    val StuString = "John,Doe,Doe,+1234567890,@johndoe,sdvnsdv@knsfvk.com,johndoe"
+
+    val student4 = Student(StuString)
+
+    val students = mutableListOf(student, student2, student3, student4)
     students.forEach { println(it) }
 
+    student3.nameSetter("Jane")
+
+    students.forEach { println(it) }
     println(student.phoneNumber)
 }

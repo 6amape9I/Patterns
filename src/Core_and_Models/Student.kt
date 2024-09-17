@@ -70,10 +70,6 @@ data class Student(
             id = id + 1
             return id
         }
-
-        private fun validateName(name: String): Boolean {
-            return name.matches(Regex("^[a-zA-Z]+\$"))
-        }
     }
 
     private fun isValidName(name: String): Boolean {
@@ -108,11 +104,23 @@ data class Student(
         name = stuMap["name"] as String,
         secondName = stuMap["secondName"] as String,
         fathersName = stuMap["fathersName"] as String,
-        phoneNumber = stuMap["phoneNumber"] as String,
-        telegram = stuMap["telegram"] as String,
-        email = stuMap["email"] as String,
-        github = stuMap["github"] as String
+        phoneNumber = stuMap.getOrDefault("phoneNumber", null) as String?,
+        telegram = stuMap.getOrDefault("telegram", null) as String?,
+        email = stuMap.getOrDefault("email", null) as String?,
+        github = stuMap.getOrDefault("github", null) as String?
     )
+
+    constructor(stringStu: String):this(
+        id = AutoIncrementId(),
+        name = stringStu.split(",")[0],
+        secondName = stringStu.split(",")[1],
+        fathersName = stringStu.split(",")[2],
+        phoneNumber = stringStu.split(",")[3],
+        telegram = stringStu.split(",")[4],
+        email = stringStu.split(",")[5],
+        github = stringStu.split(",")[6]
+    )
+
     override fun toString(): String {
         return "Student($id'$name', '$secondName', '$fathersName', $phoneNumber, '$telegram', '$email', '$github')"
     }
