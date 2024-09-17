@@ -42,6 +42,15 @@ data class Student(
         this.github = github
     }
 
+    fun getInfo(): String {
+        var temp_str = "Student('$name' '${secondName[0]}' '${fathersName[0]}'"
+        if (github != null) temp_str += "-github:$github"
+        if (phoneNumber != null) temp_str += "-phone:$phoneNumber"
+        else if (telegram != null) temp_str += "-telegarm:$telegram"
+        else if (email != null) temp_str += "-email:$email"
+        return temp_str
+    }
+
     private fun <T>validatorFunc(value:T, errorMessage:String, valudatorFunction: KFunction1<T, Boolean>){
         require(valudatorFunction(value)) { errorMessage }
     }
@@ -109,6 +118,8 @@ data class Student(
         email = stuMap.getOrDefault("email", null) as String?,
         github = stuMap.getOrDefault("github", null) as String?
     )
+
+
 
     constructor(stringStu: String):this(
         id = AutoIncrementId(),
