@@ -80,6 +80,22 @@ open class Student(
             id = id + 1
             return id
         }
+
+        fun read_from_txt(file_name: String): MutableList<Student> {
+            val students = mutableListOf<Student>()
+            val lines = File(file_name).readLines()
+            for (line in lines) {
+                students.add(Student(line))
+            }
+            return students
+        }
+        fun write_to_txt(file_name: String, students: MutableList<Student>) {
+            val file = File(file_name)
+            file.writeText("")
+            for (student in students) {
+                file.appendText(student.toString() + "\n")
+            }
+        }
     }
 
     private fun isValidName(name: String): Boolean {
@@ -148,19 +164,4 @@ open class Student(
         return "$name,$secondName,$fathersName,$phoneNumber,$telegram,$email,$github"
     }
 
-    fun read_from_txt(file_name: String): MutableList<Student> {
-        val students = mutableListOf<Student>()
-        val lines = File(file_name).readLines()
-        for (line in lines) {
-            students.add(Student(line))
-        }
-        return students
-    }
-    fun write_to_txt(file_name: String, students: MutableList<Student>) {
-        val file = File(file_name)
-        file.writeText("")
-        for (student in students) {
-            file.appendText(student.toString() + "\n")
-        }
-    }
 }

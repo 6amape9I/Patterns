@@ -1,7 +1,8 @@
 package Core_and_Models
 
-abstract class Data_list {
+open class Data_list {
     var dList: MutableList<Any> = mutableListOf()
+    private var selected: MutableList<Any> = mutableListOf()
 
     init {
         dList = mutableListOf()
@@ -15,10 +16,10 @@ abstract class Data_list {
     }
 
     fun select(number: Int){
-        dList[number]
+        selected.add(dList[number])
     }
 
-    fun get_selsected(selected: MutableList<Any>): MutableList<Int> {
+    fun get_selsected(): MutableList<Int> {
         val ids = mutableListOf<Int>()
         for (i in selected){
             ids.add(dList.indexOf(i))
@@ -26,6 +27,4 @@ abstract class Data_list {
         return ids
     }
 
-    abstract fun get_names(): List<String>
-    abstract fun get_data(): Data_table
 }

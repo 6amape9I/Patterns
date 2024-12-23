@@ -13,6 +13,14 @@ class Data_table {
         }
     }
 
+    companion object{
+        var id = 0
+        fun AutoIncrementId(): Int {
+            id = id + 1
+            return id
+        }
+    }
+
     constructor(number: Number){
         dArray = Array(1) { Array(1) { "" } }
         dArray[0][0] = number
@@ -31,12 +39,13 @@ class Data_table {
     constructor(data: String){
         val temp = data.split("\n")
         val rows = temp.size
-        val columns = temp[0].split(",").size
+        val columns = temp[0].split(",").size + 1
         dArray = Array(rows) { Array(columns) { "" } }
         for (i in 0..<rows){
             val temp2 = temp[i].split(",")
-            for (j in 0..<columns){
-                dArray[i][j] = temp2[j]
+            dArray[i][0] = AutoIncrementId()
+            for (j in 1..<columns){
+                dArray[i][j] = temp2[j-1]
             }
         }
     }
@@ -45,4 +54,14 @@ class Data_table {
         return dArray[row][col]
     }
 
+    override fun toString(): String {
+        var s = ""
+        for (i in dArray.indices){
+            for (j in dArray[i].indices){
+                s += dArray[i][j].toString() + ","
+            }
+            s += "\n"
+        }
+        return s
+    }
 }

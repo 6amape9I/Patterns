@@ -1,5 +1,8 @@
 package Core_and_Models
 
+import Core_and_Models.Student.Companion.read_from_txt
+import Core_and_Models.Student.Companion.write_to_txt
+
 fun main() {
     val student = Student(
         name="John",
@@ -44,8 +47,8 @@ fun main() {
     students.forEach { println(it) }
     println(student.phoneNumber)
 
-    val check = Student().write_to_txt("students.txt", students)
-    val stuList = Student().read_from_txt("students.txt")
+    val check = write_to_txt("students.txt", students)
+    val stuList = read_from_txt("students.txt")
 
     val dTable = Data_table(3, 3, "data")
     val dTable2 = Data_table(3.14)
@@ -60,4 +63,8 @@ fun main() {
     println(dTable4.get_by_row_col(1, 1))
     println(dTable5.get_by_row_col(2, 2))
     println(dTable6.get_by_row_col(1, 1))
+
+    val dList = Data_list_student_short(listOf(student, student2, student3, student4))
+    val data = dList.get_data()
+    println(data)
 }
