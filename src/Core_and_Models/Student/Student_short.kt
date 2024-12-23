@@ -1,4 +1,4 @@
-package Core_and_Models
+package Core_and_Models.Student
 
 class Student_short: Student {
 

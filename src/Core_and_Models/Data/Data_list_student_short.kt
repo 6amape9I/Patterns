@@ -1,4 +1,4 @@
-package Core_and_Models
+package Core_and_Models.Data
 
 class Data_list_student_short : Data_list {
     constructor(data: List<Any>) : super(data)

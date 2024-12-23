@@ -1,4 +1,4 @@
-package Core_and_Models
+package Core_and_Models.Student
 
 import java.io.File
 import kotlin.reflect.KFunction1

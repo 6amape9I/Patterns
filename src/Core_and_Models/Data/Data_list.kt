@@ -1,4 +1,4 @@
-package Core_and_Models
+package Core_and_Models.Data
 
 open class Data_list {
     var dList: MutableList<Any> = mutableListOf()

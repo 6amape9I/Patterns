@@ -1,22 +1,30 @@
 package Core_and_Models
 
-import Core_and_Models.Student.Companion.read_from_JSON
-import Core_and_Models.Student.Companion.read_from_YAML
-import Core_and_Models.Student.Companion.read_from_txt
-import Core_and_Models.Student.Companion.write_to_JSON
-import Core_and_Models.Student.Companion.write_to_YAML
-import Core_and_Models.Student.Companion.write_to_txt
+import Core_and_Models.StudentList.JsonStrategy
+import Core_and_Models.StudentList.Super_Student_list
+import Core_and_Models.StudentList.TxtStrategy
+
 
 fun main() {
 
-    val students = read_from_txt("students.txt")
-    val chek = write_to_YAML("students.yaml", students)
-    val chek2 = write_to_JSON("students.json", students)
+    var ssl = Super_Student_list(TxtStrategy())
+    ssl.read("students.txt")
+    ssl.sortByNameAndSurnameInitials()
+    ssl.write("students.txt")
+    println(ssl.getStudentShortCount())
+    println(ssl.getStudentById(1))
+    println(ssl.get_k_n_student_short_list(2, 2))
+    println(ssl.getStudentShortCount())
+    println(ssl.getStudentById(1))
 
-    val students_yaml = read_from_YAML("students.yaml")
+    ssl.SetStragegy(JsonStrategy())
+    ssl.read("students.json")
+    ssl.sortByNameAndSurnameInitials()
+    ssl.write("students.json")
+    println(ssl.getStudentShortCount())
+    println(ssl.getStudentById(1))
+    println(ssl.get_k_n_student_short_list(2, 2))
+    println(ssl.getStudentShortCount())
 
-    students_yaml.forEach {
-        println(it)
-    }
 
 }
