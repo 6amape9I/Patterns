@@ -16,6 +16,9 @@ class DBConfig {
     }
 
     private fun connectToDatabase(): Connection? {
+        if (connection != null) {
+            return connection
+        }
         val url = "jdbc:postgresql://localhost:5432/StudentsDB" // Замените на ваш URL базы данных
         val user = "postgres" // Замените на ваше имя пользователя
         val password = "Tima2706" // Замените на ваш пароль
