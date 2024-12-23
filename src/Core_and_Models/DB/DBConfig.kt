@@ -3,44 +3,51 @@ package Core_and_Models.DB
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
-import java.util.LinkedList
+
 
 class DBConfig {
-    private var conn: Connection? = null
 
-    fun createConnection(){
-        val url = "jdbc:postgresql://localhost:5432/StudentsDB"
-        val user = "postgres"
-        val password = "Tima2706"
-        this.conn = null
+    var connection: Connection? = connectToDatabase()
+
+    init {
+        if (connection == null) {
+            println("Не удалось подключиться к базе данных")
+        }
+    }
+
+    private fun connectToDatabase(): Connection? {
+        val url = "jdbc:postgresql://localhost:5432/StudentsDB" // Замените на ваш URL базы данных
+        val user = "postgres" // Замените на ваше имя пользователя
+        val password = "Tima2706" // Замените на ваш пароль
+
+        return try {
+            DriverManager.getConnection(url, user, password)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    fun executeQuery(connection: Connection) {
+        val sql = "SELECT * FROM student" // Замените на ваше имя таблицы
+        val statement = connection.createStatement()
+        val resultSet: ResultSet = statement.executeQuery(sql)
+
+        while (resultSet.next()) {
+            println(resultSet) // Измените индекс или имя столбца по необходимости
+        }
+
+        statement.close()
+    }
+
+    fun close() {
         try {
-            this.conn = DriverManager.getConnection(url, user, password)
+            connection?.close()
         } catch (e: Exception) {
             println(e.message)
         }
     }
 
-    fun getConnection() = this.conn;
 
-    fun executeSqlSelect(query:String): ResultSet? {
-        val res:LinkedList<HashMap<String,Any>>;
-        try {
-            val conn = getConnection()
-            val statement = conn?.createStatement()
-            if (statement != null) {
-                return statement.executeQuery(query)
-            }
-        } catch (e: java.lang.Exception) {
-            println(e.message)
-        }
-        return null;
-    }
-    fun executeSql(query:String){
-        try {
-            val conn = getConnection()
-            val affectedRows = conn?.prepareStatement(query)?.executeUpdate()
-        } catch (e: java.lang.Exception) {
-            println(e)
-        }
-    }
+
 }
