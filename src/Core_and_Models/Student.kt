@@ -3,6 +3,7 @@ package Core_and_Models
 import java.io.File
 import kotlin.reflect.KFunction1
 
+
 open class Student(
     var id: Int? = AutoIncrementId(),
     var name: String,
@@ -81,10 +82,46 @@ open class Student(
             return id
         }
 
+        fun read_from_JSON(file_name: String): MutableList<Student> {
+            val students = mutableListOf<Student>()
+            val json = File(file_name).readText()
+            val regex = Regex("\\{\\s*\"id\":\\s*(\\d+),\\s*\"name\":\\s*\"(\\w+)\",\\s*\"secondName\":\\s*\"(\\w+)\",\\s*\"fathersName\":\\s*\"(\\w+)\",\\s*\"phoneNumber\":\\s*\"(\\+\\d{10,12})\",\\s*\"telegram\":\\s*\"(@\\w+)\",\\s*\"email\":\\s*\"(\\w+@\\w+\\.\\w+)\",\\s*\"github\":\\s*\"(\\w+)\"\\s*}")
+            regex.findAll(json).forEach {
+                val (id, name, secondName, fathersName, phoneNumber, telegram, email, github) = it.destructured
+                students.add(Student(id.toInt(), name, secondName, fathersName, phoneNumber, telegram, email, github))
+            }
+
+            return students
+        }
+
+        fun write_to_JSON(file_name: String, students: MutableList<Student>) {
+            val file = File(file_name)
+            file.writeText("[\n")
+            students.forEachIndexed { index, student ->
+                val json = """
+            {
+            "id": ${student.id},
+            "name": "${student.name}",
+            "secondName": "${student.secondName}",
+            "fathersName": "${student.fathersName}",
+            "phoneNumber": "${student.phoneNumber}",
+            "telegram": "${student.telegram}",
+            "email": "${student.email}",
+            "github": "${student.github}"}
+        """.trimIndent()
+                file.appendText(json)
+                if (index < students.size - 1) {
+                    file.appendText(",\n")
+                }
+            }
+            file.appendText("\n]")
+        }
+
         fun read_from_txt(file_name: String): MutableList<Student> {
             val students = mutableListOf<Student>()
             val lines = File(file_name).readLines()
             for (line in lines) {
+                println(line)
                 students.add(Student(line))
             }
             return students
