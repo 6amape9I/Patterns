@@ -82,6 +82,36 @@ open class Student(
             return id
         }
 
+        fun read_from_YAML(file_name: String): MutableList<Student> {
+            val students = mutableListOf<Student>()
+            val yaml = File(file_name).readText()
+            val regex = Regex("- id: (\\d+)\n  name: (\\w+)\n  secondName: (\\w+)\n  fathersName: (\\w+)\n  phoneNumber: (\\+\\d{10,12})\n  telegram: (@\\w+)\n  email: (\\w+@\\w+\\.\\w+)\n  github: (\\w+)")
+            regex.findAll(yaml).forEach {
+                val (id, name, secondName, fathersName, phoneNumber, telegram, email, github) = it.destructured
+                students.add(Student(id.toInt(), name, secondName, fathersName, phoneNumber, telegram, email, github))
+            }
+
+            return students
+        }
+
+        fun write_to_YAML(file_name: String, students: MutableList<Student>) {
+            val file = File(file_name)
+            file.writeText("")
+            students.forEach { student ->
+                val yaml = """
+            - id: ${student.id}
+              name: ${student.name}
+              secondName: ${student.secondName}
+              fathersName: ${student.fathersName}
+              phoneNumber: ${student.phoneNumber}
+              telegram: ${student.telegram}
+              email: ${student.email}
+              github: ${student.github}
+        """.trimIndent()
+                file.appendText(yaml + "\n")
+            }
+        }
+
         fun read_from_JSON(file_name: String): MutableList<Student> {
             val students = mutableListOf<Student>()
             val json = File(file_name).readText()
