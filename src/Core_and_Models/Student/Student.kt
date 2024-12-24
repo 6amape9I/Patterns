@@ -4,8 +4,7 @@ import kotlin.reflect.KFunction1
 
 
 open class Student(
-    var id: Int? = AutoIncrementId(),
-    var name: String,
+    var name: String? = null,
     var secondName: String? = null,
     var fathersName: String? = null,
     var phoneNumber: String? = null,
@@ -56,7 +55,7 @@ open class Student(
         require(valudatorFunction(value)) { errorMessage }
     }
 
-    private fun validateName(name: String) = validatorFunc(name, "Name must contain only letters", ::isValidName)
+    private fun validateName(name: String?) = validatorFunc(name, "Name must contain only letters", ::isValidName)
     private fun validateSecondName(secondName: String?) = validatorFunc(secondName, "Second name must contain only letters", ::isValidSecondName)
     private fun validateFathersName(fathersName: String?) = validatorFunc(fathersName, "Fathers name must contain only letters", ::isValidFathersName)
     private fun validatePhoneNumber(phoneNumber: String?) = validatorFunc(phoneNumber, "Phone number must contain only letters", ::isValidPhoneNumber)
@@ -83,8 +82,8 @@ open class Student(
 
     }
 
-    private fun isValidName(name: String): Boolean {
-        return name.matches(Regex("^[a-zA-Z]+\$"))
+    private fun isValidName(name: String?): Boolean {
+        return name?.matches(Regex("^[a-zA-Z]+\$")) ?: true
     }
     private fun isValidSecondName(secondName: String?): Boolean {
         return secondName?.matches(Regex("^[a-zA-Z]+\$")) ?: true
@@ -111,7 +110,6 @@ open class Student(
     }
 
     constructor():this(
-        id = AutoIncrementId(),
         name = "John",
         secondName = "Doe",
         fathersName = "Doe",
@@ -122,7 +120,6 @@ open class Student(
     )
 
     constructor(stuMap: HashMap<String, Any?>):this(
-        id = AutoIncrementId(),
         name = stuMap["name"] as String,
         secondName = stuMap["secondName"] as String,
         fathersName = stuMap["fathersName"] as String,
@@ -133,7 +130,6 @@ open class Student(
     )
 
     constructor(stringStu: String):this(
-        id = AutoIncrementId(),
         name = stringStu.split(",")[0],
         secondName = stringStu.split(",")[1],
         fathersName = stringStu.split(",")[2],

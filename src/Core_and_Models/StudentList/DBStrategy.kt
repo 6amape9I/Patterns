@@ -23,7 +23,7 @@ class DBStrategy: StudentList {
                 val email = resultSet.getString(7)
                 val github = resultSet.getString(8)
 
-                students.add(Student(id, name, secondName, fathersName, phoneNumber, telegram, email, github))
+                students.add(Student(name, secondName, fathersName, phoneNumber, telegram, email, github))
             }
         }else{
             return mutableListOf<Student>()
@@ -34,10 +34,11 @@ class DBStrategy: StudentList {
     override fun write(fileName: String, students: MutableList<Student>) {
         clear()
         val connection = DBConfig.connection
+        var counter = 0
         val statement = connection?.createStatement()
         val sql = "INSERT INTO student (id, name, secondName, fathersName, phoneNumber, telegram, email, github) VALUES "
         students.forEachIndexed { index, student ->
-            val values = "(${student.id}, '${student.name}', '${student.secondName}', '${student.fathersName}', '${student.phoneNumber}', '${student.telegram}', '${student.email}', '${student.github}')"
+            val values = "(${counter++}, '${student.name}', '${student.secondName}', '${student.fathersName}', '${student.phoneNumber}', '${student.telegram}', '${student.email}', '${student.github}')"
             statement?.executeUpdate(sql + values)
         }
     }

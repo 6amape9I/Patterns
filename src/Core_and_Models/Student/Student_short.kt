@@ -11,8 +11,8 @@ class Student_short: Student {
         secondName: String? = null,
         fathersName: String? = null
     ): super(
-        name=name + " " + (secondName?.get(0) ?: "" ) + " " + (fathersName?.get(0) ?: ""),
-        github=github
+        name =name + " " + (secondName?.get(0) ?: "" ) + " " + (fathersName?.get(0) ?: ""),
+        github =github
     ){
         this.contact = phoneNumber ?: telegram ?: email
     }

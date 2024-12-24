@@ -11,7 +11,7 @@ class YamlStrategy: StudentList{
         val regex = Regex("- id: (\\d+)\n  name: (\\w+)\n  secondName: (\\w+)\n  fathersName: (\\w+)\n  phoneNumber: (\\+\\d{10,12})\n  telegram: (@\\w+)\n  email: (\\w+@\\w+\\.\\w+)\n  github: (\\w+)")
         regex.findAll(yaml).forEach {
             val (id, name, secondName, fathersName, phoneNumber, telegram, email, github) = it.destructured
-            students.add(Student(id.toInt(), name, secondName, fathersName, phoneNumber, telegram, email, github))
+            students.add(Student(name, secondName, fathersName, phoneNumber, telegram, email, github))
         }
 
         return students
@@ -19,9 +19,10 @@ class YamlStrategy: StudentList{
     override fun write(fileName: String, students: MutableList<Student>) {
         val file = File(fileName)
         file.writeText("")
+        var counter = 0
         students.forEach { student ->
             val yaml = """
-            - id: ${student.id}
+            - id: ${counter++}
               name: ${student.name}
               secondName: ${student.secondName}
               fathersName: ${student.fathersName}

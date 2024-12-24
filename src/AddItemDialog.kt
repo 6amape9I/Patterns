@@ -1,4 +1,5 @@
 import Core_and_Models.Student.Student
+import Core_and_Models.Student.StudentViewModel
 import tornadofx.*
 
 class AddItemDialog : Fragment("Add Item") {

@@ -11,7 +11,7 @@ class JsonStrategy: StudentList {
         val regex = Regex("\\{\\s*\"id\":\\s*(\\d+),\\s*\"name\":\\s*\"(\\w+)\",\\s*\"secondName\":\\s*\"(\\w+)\",\\s*\"fathersName\":\\s*\"(\\w+)\",\\s*\"phoneNumber\":\\s*\"(\\+\\d{10,12})\",\\s*\"telegram\":\\s*\"(@\\w+)\",\\s*\"email\":\\s*\"(\\w+@\\w+\\.\\w+)\",\\s*\"github\":\\s*\"(\\w+)\"\\s*}")
         regex.findAll(json).forEach {
             val (id, name, secondName, fathersName, phoneNumber, telegram, email, github) = it.destructured
-            students.add(Student(id.toInt(), name, secondName, fathersName, phoneNumber, telegram, email, github))
+            students.add(Student(name, secondName, fathersName, phoneNumber, telegram, email, github))
         }
 
         return students
@@ -20,10 +20,11 @@ class JsonStrategy: StudentList {
     override fun write(fileName: String, students: MutableList<Student>) {
         val file = File(fileName)
         file.writeText("[\n")
+        var counter = 0
         students.forEachIndexed { index, student ->
             val json = """
             {
-            "id": ${student.id},
+            "id": ${counter++},
             "name": "${student.name}",
             "secondName": "${student.secondName}",
             "fathersName": "${student.fathersName}",
