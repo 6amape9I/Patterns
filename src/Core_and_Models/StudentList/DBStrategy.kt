@@ -8,7 +8,7 @@ class DBStrategy: StudentList {
     override fun read(fileName: String): MutableList<Student> {
         val students = mutableListOf<Student>()
         val sql = "SELECT * FROM student"
-        val connection = DBConfig().connection
+        val connection = DBConfig.connection
         val statement = connection?.createStatement()
         val resultSet = statement?.executeQuery(sql)
 
@@ -33,7 +33,7 @@ class DBStrategy: StudentList {
 
     override fun write(fileName: String, students: MutableList<Student>) {
         clear()
-        val connection = DBConfig().connection
+        val connection = DBConfig.connection
         val statement = connection?.createStatement()
         val sql = "INSERT INTO student (id, name, secondName, fathersName, phoneNumber, telegram, email, github) VALUES "
         students.forEachIndexed { index, student ->
@@ -43,7 +43,7 @@ class DBStrategy: StudentList {
     }
 
     fun clear () {
-        val connection = DBConfig().connection
+        val connection = DBConfig.connection
         val statement = connection?.createStatement()
         val sql = "DELETE FROM student"
         statement?.executeUpdate(sql)

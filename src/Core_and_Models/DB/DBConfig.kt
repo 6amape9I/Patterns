@@ -5,7 +5,7 @@ import java.sql.DriverManager
 import java.sql.ResultSet
 
 
-class DBConfig {
+object DBConfig {
 
     var connection: Connection? = connectToDatabase()
 
